@@ -1,28 +1,31 @@
 package ru.academy.domain;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "users", schema = "userdb")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private final String username;
+
+    @Column(name = "username")
+    private String username;
 
     public User(Long id, String username) {
         this.id = id;
         this.username = username;
     }
 
+    public User() {}
+
     public User(String username) {
         this.username = username;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     @Override
