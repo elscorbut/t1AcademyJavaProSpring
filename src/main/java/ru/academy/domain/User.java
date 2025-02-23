@@ -17,11 +17,6 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    public User(Long id, String username) {
-        this.id = id;
-        this.username = username;
-    }
-
     public User() {}
 
     public User(String username) {
