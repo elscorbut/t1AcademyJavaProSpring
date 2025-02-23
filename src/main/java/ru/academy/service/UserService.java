@@ -1,37 +1,47 @@
 package ru.academy.service;
 
 import org.springframework.stereotype.Service;
-import ru.academy.dao.UserDao;
+import org.springframework.transaction.annotation.Transactional;
 import ru.academy.domain.User;
+import ru.academy.repository.UserRepository;
 
 import java.util.List;
 
 @Service
 public class UserService {
 
-    private final UserDao userDao;
+    private final UserRepository userRepository;
 
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
+    @Transactional
     public User create(User user) {
-        return userDao.create(user);
+        return userRepository.save(user);
     }
 
-    public int deleteById(Long userId) {
-        return userDao.deleteById(userId);
+    @Transactional
+    public void deleteById(Long userId) {
+        userRepository.deleteById(userId);
     }
 
-    public int updateUsernameById(Long userId, String newUsername) {
-        return userDao.updateUsernameById(userId, newUsername);
+    @Transactional
+    public User updateUsernameById(Long userId, String newUsername) {
+        User user = findById(userId);
+        user.setUsername(newUsername);
+
+        return userRepository.save(user);
     }
 
+    @Transactional(readOnly = true)
     public User findById(Long userId) {
-        return userDao.findById(userId);
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
     }
 
+    @Transactional(readOnly = true)
     public List<User> findAll() {
-        return userDao.findAll();
+        return userRepository.findAll();
     }
 }
