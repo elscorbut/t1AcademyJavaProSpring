@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -17,14 +19,21 @@ public class User {
     @Column(name = "username")
     private String username;
 
+    @OneToMany(mappedBy = "user")
+    private List<Product> products;
+
     public User() {}
 
     public User(String username) {
         this.username = username;
     }
 
+
     @Override
     public String toString() {
-        return "User [id=" + id + ", username=" + username + "]";
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                '}';
     }
 }
