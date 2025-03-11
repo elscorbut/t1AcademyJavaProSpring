@@ -1,0 +1,11 @@
+server:
+  port: 8082
+  servlet:
+    context-path: "/payment-app"
+
+integration:
+  clients:
+    product-client:
+      uri: "http://localhost:8081/product-app"
+      connect-timeout: 5s
+      read-timeout: 10s

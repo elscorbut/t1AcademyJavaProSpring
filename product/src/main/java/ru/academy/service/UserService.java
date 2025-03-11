@@ -3,6 +3,7 @@ package ru.academy.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.academy.domain.User;
+import ru.academy.exception.UserNotFoundException;
 import ru.academy.repository.UserRepository;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public User findById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
     }
 
     @Transactional(readOnly = true)
